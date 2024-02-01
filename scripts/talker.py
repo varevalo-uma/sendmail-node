@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ## This node sends mails by means of sendmail, which is listening the "chatter" topic.
-## Be careful, the struct of json object must be as indicated next:
+## Be careful, the struct of json object must be as indicated below:
 ##    eg: email = '{ 
 ##          "robot" : "name",
 ##          "to" : "to@example.com", 
@@ -16,7 +16,7 @@ from std_msgs.msg import String
 def talker() :
 
     pub = rospy.Publisher('chatter', String, queue_size = 10)
-    rospy.init_node('talker', anonymous=True)
+    rospy.init_node('talker', anonymous = True)
 
     email = '{\
         "robot" : "name",\

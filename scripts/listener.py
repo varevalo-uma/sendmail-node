@@ -16,7 +16,6 @@ import smtplib, ssl
 from_addr = "your@email.com"
 password = "yourpassword"
 
-
 # SMTP Server
 server = "smtp.gmail.com" # domain or ip
 port = 587  # for starttls
@@ -70,5 +69,9 @@ def listener():
     # waiting for new messages
     rospy.spin()
 
+
 if __name__ == '__main__':
-    listener()
+    try :
+        listener()
+    except rospy.ROSInterruptException :
+        pass
