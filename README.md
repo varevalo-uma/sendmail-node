@@ -35,7 +35,7 @@ port = 587  # for starttls
 
 Observe that the connection is secure; I create a valid SSL credentials for securing the communications.
 
-Finally, how does the script work? `listener.py` provides a (std_msgs.msg) String subscriber, called `/chatter`, as channel for receiving the messages, and conveniently routes them to the SMTP server. The e-mail body, the sender and the subject must be encapsulated as a JSON object with the following set of  pairs attribute-value:
+Finally, how does the script work? `listener.py` provides a (std_msgs.msg) String subscriber, called `/chatter`, as channel for receiving the messages, and conveniently routes them to the SMTP server. The e-mail body, the sender, the recipient address, and the subject must be encapsulated as a JSON object with the following set of pairs attribute-value:
 
 ```
 email = '{ 
@@ -46,7 +46,7 @@ email = '{
 	}'
 ```
 
-The package contains the scripts `talker.py` as proof of usage. Next, you will find the source:
+The package contains the script `talker.py` as proof of usage. Next, you will find the source:
 
 ### talker.py
 
@@ -70,7 +70,7 @@ email = '{\
 pub.publish(email)
 ```
 
-Finally, for testing both scripts you can use the following commands (I suppose you known deploy & install the package):
+Finally, for testing both scripts you can use the following commands (I suppose you know to deployl a ROS node from sources):
 
 ```
 $ roscore
