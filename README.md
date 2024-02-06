@@ -22,8 +22,8 @@ Once you have the configuration data of your SMTP server (ie, domain, and port),
 ...
 
 # Google credentials
-from_addr = "my.email.address@gmail.com"
-password = "my.email.password"
+userid = 'youremail@gmail.com'
+passwd = 'yourpassword'
 
 # Configuration data for Google SMTP server
 server = "smtp.gmail.com" # domain or ip
@@ -65,8 +65,8 @@ email = '{\
 	"subject" : "Hi!",\
 	"body" : "This is a test. bye. V"\
 }'
-# rospy.loginfo(email)
 
+# rospy.loginfo(email)
 pub.publish(email)
 ```
 
