@@ -77,8 +77,7 @@ $ roscore
 $ rosrun sendmail listener.py &
 $ rosrun sendmail talker.py
 ```
-
-Many improvements can be done: additional validations on the JSON object format, SMTP data configurable via ROS params, rich HTML messages (MIME support), attached files,... but that, for future releases :-D. 
+Some improvements can be done: ~~checking the JSON object format~~, ~~SMTP data configurable via ROS params~~, rich HTML messages (MIME support), attached files,... but that, for future releases :-D.
 
 ## License
 
