@@ -1,0 +1,8 @@
+# Mail account credentials
+userid: "youremail@gmail.com"
+passwd: "yourpassword"
+
+# SMTP server data
+server: "smtp.gmail.com"
+port: 587
+

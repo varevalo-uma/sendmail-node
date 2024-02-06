@@ -13,65 +13,63 @@ import smtplib, ssl
 
 
 # Google credentials
-from_addr = "your@email.com"
-password = "yourpassword"
+userid = 'youremail@gmail.com'
+passwd = 'yourpassword'
 
-# SMTP Server
-server = "smtp.gmail.com" # domain or ip
+# SMTP Server data
+server = 'smtp.gmail.com' # domain or ip
 port = 587  # for starttls
 
-def callback(data):
 
-    rospy.loginfo(rospy.get_caller_id() + " " + data.data)
+def callback(msg):
 
-    # parse the mail message
-    email = json.loads(data.data)
-
-    to_addr = email["to"]
-
-    # Prepare the message
-    message = MIMEText(email["body"])
-    message['Subject'] = email["subject"]
-    message['From'] = formataddr( (email["robot"], from_addr) )
-    message['To'] = to_addr
-
-    # Try to log in to server and send the email
     try:
+        #rospy.loginfo('\njson object:\n' + msg.data)
 
-        # Create a secure SSL context
-        ctx = ssl.create_default_context()
+        # parse the json object
+        data = json.loads(msg.data)
+
+        # Prepare the message
+        email            = MIMEText(data['body'])
+        email['From']    = formataddr( (data['robot'], userid) )
+        email['To']      = data['to']
+        email['Subject'] = data['subject']
 
         # Create a SMTP client
         smtp = smtplib.SMTP(server, port)
 
-        smtp.starttls(context = ctx) # secure the connection
+        # Create a secure SSL context
+        smtp.starttls(context = ssl.create_default_context())
 
-        smtp.login(from_addr, password)
+        smtp.login(userid, passwd) # login to the server
 
-        #print("\nmessage: \n", message.as_string())
-        smtp.send_message(message)
+        #rospy.loginfo('\nmessage:\n' + email.as_string())
+        smtp.send_message(email) # send the email
 
     except Exception as e:
-
-        # Print any error messages to stdout
-        print(e)
+        rospy.logerr(e) # print any error messages
 
     finally:
         smtp.quit()
 
 
-def listener():
-
-    rospy.init_node('listener')
-
-    rospy.Subscriber("chatter", String, callback) # listening at /chatter
-
-    # waiting for new messages
-    rospy.spin()
-
 
 if __name__ == '__main__':
-    try :
-        listener()
-    except rospy.ROSInterruptException :
-        pass
+
+    try:
+        rospy.Subscriber('chatter', String, callback) # listening at /chatter
+
+        rospy.init_node('listener')
+
+        # Set the SMTP server data above if you don't use ROS params.
+        userid = rospy.get_param('~userid', userid)
+        passwd = rospy.get_param('~passwd', passwd)
+        server = rospy.get_param('~server', server)
+        port   = rospy.get_param('~port', port)
+
+    except Exception as e:
+        rospy.logerr(e) # print any error messages
+
+    else:
+        rospy.spin() # waiting for new messages
+

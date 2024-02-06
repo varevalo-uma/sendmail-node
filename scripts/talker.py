@@ -1,36 +1,36 @@
 #!/usr/bin/env python
 
-## This node sends mails by means of sendmail, which is listening the "chatter" topic.
+## This node sends emails by means of sendmail, which is listening the "chatter" topic.
 ## Be careful, the struct of json object must be as indicated below:
 ##    eg: email = '{ 
 ##          "robot" : "name",
 ##          "to" : "to@example.com", 
 ##          "subject" : "Hi!",
-##          "body" : "This is a test. bye. V"
+##          "body" : "Some text. Bye!. V"
 ##      }'
 
 import rospy
 from std_msgs.msg import String
 
 
-def talker() :
-
-    pub = rospy.Publisher('chatter', String, queue_size = 10)
-    rospy.init_node('talker', anonymous = True)
-
-    email = '{\
-        "robot" : "name",\
-        "to" : "varevalo@uma.es",\
-        "subject" : "Hi!",\
-        "body" : "This is a test. bye. V"\
-    }'
-    # rospy.loginfo(email)
-
-    pub.publish(email)
-
-
 if __name__ == '__main__' :
-    try :
-        talker()
-    except rospy.ROSInterruptException :
-        pass
+
+    try:
+        pub = rospy.Publisher('chatter', String, queue_size = 10)
+
+        rospy.init_node('talker', anonymous = True)
+
+        # email encapsulated as json object
+        email = '{ "robot": "name",\
+            "to": "to@example.com",\
+            "subject": "Hi!",\
+            "body": "Some text. Bye!. V"\
+        }'
+
+        #rospy.loginfo('\njson object:\n' + email)
+        pub.publish(email)
+
+
+    except Exception as e:
+        rospy.logerr(e) # print any error messages
+

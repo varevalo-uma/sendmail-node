@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="sendmail" type="listener.py" name="sendmail" output="screen">
+
+        <rosparam file="$(find sendmail)/config/smtp.yaml" command="load" />
+<!--
+        <param name="userid" value="youremail@gmail.com"/>
+        <param name="passwd" value="yourpassword"/>
+        <param name="server" value="smtp.gmail.com"/>
+        <param name="port" value="587"/>
+-->
+    </node>
+
+</launch>
